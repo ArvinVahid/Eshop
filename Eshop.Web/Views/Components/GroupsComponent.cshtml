@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Eshop.Core.Entities.Category>
+
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/Groups/@(item.Id)/@(item.Name)">@item.Name</a>
+            @*<span class="badge badge-primary badge-pill">3</span>*@
+        </li>
+    }
+</ul>

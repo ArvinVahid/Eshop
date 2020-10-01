@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop.Web", "Eshop.Web\Eshop.Web.csproj", "{A2AF6459-C661-436A-A966-C6DDFD480426}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop.Data", "Eshop.Data\Eshop.Data.csproj", "{FE3C9539-9F39-4E30-B0AE-755773D9C0E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop.Core", "Eshop.Core\Eshop.Core.csproj", "{4CFE10FB-B0F1-423A-92BA-60549E4B2848}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2AF6459-C661-436A-A966-C6DDFD480426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AF6459-C661-436A-A966-C6DDFD480426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AF6459-C661-436A-A966-C6DDFD480426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AF6459-C661-436A-A966-C6DDFD480426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE3C9539-9F39-4E30-B0AE-755773D9C0E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE3C9539-9F39-4E30-B0AE-755773D9C0E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE3C9539-9F39-4E30-B0AE-755773D9C0E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE3C9539-9F39-4E30-B0AE-755773D9C0E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CFE10FB-B0F1-423A-92BA-60549E4B2848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CFE10FB-B0F1-423A-92BA-60549E4B2848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CFE10FB-B0F1-423A-92BA-60549E4B2848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CFE10FB-B0F1-423A-92BA-60549E4B2848}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24D142A6-547F-4367-BD69-D077E375EC15}
+	EndGlobalSection
+EndGlobal
