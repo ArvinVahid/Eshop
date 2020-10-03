@@ -1,0 +1,25 @@
+﻿@model Eshop.Web.DTOs.CategoryProductViewModel
+@{
+    ViewData["Title"] = "جزئیات";
+}
+
+<div class="text-justify">
+    <h3>@Model.Product.Name</h3>
+    <hr />
+    <p class="text-center"><img src="/images/@(Model.Product.ItemId).jpg" class="img-thumbnail" style="max-width: 800px; max-height: 800px" /></p>
+    <blockquote class="py-2">@Model.Product.Description</blockquote>
+    <p class="font-weight-bold">قیمت: @Model.Product.Item.Price تومان</p>
+    <div>
+        <dl>
+            @foreach (var item in Model.Categories)
+            {
+                <dt>@item.Name</dt>
+                <dd>@item.Description</dd>
+            }
+        </dl>
+    </div>
+    <a class="btn btn-primary text-white" asp-action="AddToCart" asp-controller="Home" 
+       asp-route-itemId ="@Model.Product.ItemId">افزودن به سبد خرید</a>
+</div>
+
+

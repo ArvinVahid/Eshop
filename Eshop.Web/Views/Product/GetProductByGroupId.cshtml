@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Eshop.Core.Entities.Product> 
+@{
+    ViewData["Title"] = ViewData["GroupName"];
+}
+
+
+<h3 class="font-weight-bold text-center">محصولات @ViewData["GroupName"]</h3>
+<hr/>
+
+<div class="text-center">
+    <div class="row ">
+        @foreach (var item in Model)
+        {
+            <partial name="PartialViews/_ProductBox" model="@item"/>
+        }
+    </div>
+</div>
+

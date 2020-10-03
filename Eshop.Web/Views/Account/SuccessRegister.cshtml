@@ -1,0 +1,11 @@
+﻿@model Eshop.Web.DTOs.RegisterViewModel 
+@{
+    ViewData["Title"] = "ثبت نام موفق";
+}
+
+<div class="alert alert-success">
+    <p>کاربر عزیز با ایمیل @ViewBag.Email!</p>
+    <p>ثبت نام شما با موفقیت انجام شد ، با کلیک روی لینک زیر میتوانید وارد سایت شوید.</p>
+    <p><a asp-action="Login" asp-controller="Account">ورود به سایت</a></p>
+</div>
+

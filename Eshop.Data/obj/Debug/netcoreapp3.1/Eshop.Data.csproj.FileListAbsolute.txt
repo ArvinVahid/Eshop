@@ -1,0 +1,15 @@
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Data.deps.json
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Data.dll
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.csprojAssemblyReference.cache
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.AssemblyInfoInputs.cache
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.AssemblyInfo.cs
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Data.runtimeconfig.json
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Data.runtimeconfig.dev.json
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Data.pdb
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Core.dll
+G:\Projects\Eshop\Eshop.Data\bin\Debug\netcoreapp3.1\Eshop.Core.pdb
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.csproj.CopyComplete
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.dll
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.pdb
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.genruntimeconfig.cache
+G:\Projects\Eshop\Eshop.Data\obj\Debug\netcoreapp3.1\Eshop.Data.csproj.CoreCompileInputs.cache
