@@ -192,5 +192,7 @@ G:\Projects\Eshop\Eshop.Web\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sq
 G:\Projects\Eshop\Eshop.Web\obj\Debug\netcoreapp3.1\Razor\Pages\_ValidationScriptsPartial.cshtml.g.cs
 G:\Projects\Eshop\Eshop.Web\bin\Debug\netcoreapp3.1\Autofac.dll
 G:\Projects\Eshop\Eshop.Web\bin\Debug\netcoreapp3.1\Autofac.Extensions.DependencyInjection.dll
+G:\Projects\Eshop\Eshop.Web\bin\Debug\netcoreapp3.1\AutoMapper.dll
 G:\Projects\Eshop\Eshop.Web\obj\Debug\netcoreapp3.1\Eshop.Web.csproj.CoreCompileInputs.cache
 G:\Projects\Eshop\Eshop.Web\obj\Debug\netcoreapp3.1\Eshop.Web.MvcApplicationPartsAssemblyInfo.cache
+G:\Projects\Eshop\Eshop.Web\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

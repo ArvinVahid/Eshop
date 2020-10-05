@@ -8,5 +8,5 @@ G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.genruntimeconfig
 G:\Projects\Eshop\Eshop.Core\bin\Debug\netcoreapp3.1\Eshop.Core.pdb
 G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.dll
 G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.pdb
-G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.csproj.CoreCompileInputs.cache
 G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.csprojAssemblyReference.cache
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.csproj.CoreCompileInputs.cache

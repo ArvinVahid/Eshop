@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Eshop.Core.Convertors;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
@@ -17,11 +18,13 @@ namespace Eshop.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private IUserServices _userServices;
+        private readonly IUserServices _userServices;
+        private readonly IMapper _mapper;
 
-        public AccountController(IUserServices userServices)
+        public AccountController(IUserServices userServices, IMapper mapper)
         {
             _userServices = userServices;
+            _mapper = mapper;
         }
 
         #region Register
@@ -48,16 +51,18 @@ namespace Eshop.Web.Controllers
                 return View(register);
             }
 
-            var users = new User()
-            {
-                Email = EmailCleaner.CleanedEmail(register.Email),
-                Password = register.Password,
-                IsAdmin = false,
-                RegisterDate = DateTime.Now
-            };
-            _userServices.AddUser(users);
+            var user = new User();
+            //{
+            //    Email = EmailCleaner.CleanedEmail(register.Email),
+            //    Password = register.Password,
+            //    IsAdmin = false,
+            //    RegisterDate = DateTime.Now
+            //};
+
+            var userViewModel = _mapper.Map<RegisterViewModel>(user);
+            _userServices.AddUser(user);
             _userServices.SaveChanges();
-            return View("SuccessRegister", register);
+            return View("SuccessRegister", userViewModel);
         }
 
         #endregion

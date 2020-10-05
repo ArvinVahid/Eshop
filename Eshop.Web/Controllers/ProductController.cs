@@ -26,5 +26,6 @@ namespace Eshop.Web.Controllers
             var products = _productServices.GetProductsByGroupId(id);
             return View(products);
         }
+        
     }
 }

@@ -5,9 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;
 using Eshop.Data.UserServices;
+using Eshop.Web.AutoMapping;
+using Eshop.Web.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,8 +36,8 @@ namespace Eshop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
             services.AddRazorPages();
-            services.AddOptions();
 
             #region Database Context
 
