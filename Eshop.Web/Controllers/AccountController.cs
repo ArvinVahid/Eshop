@@ -11,7 +11,6 @@ using Eshop.Core.Services.Interfaces;
 using Eshop.Web.DTOs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eshop.Web.Controllers
@@ -51,18 +50,11 @@ namespace Eshop.Web.Controllers
                 return View(register);
             }
 
-            var user = new User();
-            //{
-            //    Email = EmailCleaner.CleanedEmail(register.Email),
-            //    Password = register.Password,
-            //    IsAdmin = false,
-            //    RegisterDate = DateTime.Now
-            //};
 
-            var userViewModel = _mapper.Map<RegisterViewModel>(user);
-            _userServices.AddUser(user);
-            _userServices.SaveChanges();
-            return View("SuccessRegister", userViewModel);
+            /*var userDTO = _mapper.Map<User>(register);
+            _userServices.AddUser(userDTO);
+            _userServices.SaveChanges();*/
+            return View("SuccessRegister", register);
         }
 
         #endregion

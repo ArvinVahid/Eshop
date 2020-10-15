@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;
@@ -21,12 +22,14 @@ namespace Eshop.Web.Controllers
         private readonly IUserServices _userServices;
         private readonly IProductServices _productServices;
         private readonly IOrderServices _orderServices;
+        private readonly IMapper _mapper;
 
-        public HomeController(IUserServices userServices, IProductServices productServices, IOrderServices orderServices)
+        public HomeController(IUserServices userServices, IProductServices productServices, IOrderServices orderServices, IMapper mapper)
         {
             _userServices = userServices;
             _productServices = productServices;
             _orderServices = orderServices;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -55,15 +58,11 @@ namespace Eshop.Web.Controllers
 
         public IActionResult Details(int itemId)
         {
-            var productById = _productServices.GetProductById(itemId);
-            var allCategories = _productServices.GetAllCategories();
+            var product = _productServices.GetProductById(itemId);
 
-            var viewModel = new CategoryProductViewModel()
-            {
-                Product = productById,
-                Categories = allCategories
-            };
-            return View(viewModel);
+            var dto = _mapper.Map<CategoryProductViewModel>(product);
+
+            return View(dto);
         }
 
         #endregion

@@ -13,6 +13,20 @@ namespace Eshop.Web.AutoMapping
         public AutoMapping()
         {
             CreateMap<User, RegisterViewModel>();
+            CreateMap<RegisterViewModel, User>();
+
+
+            CreateMap<Product, CategoryProductViewModel>()
+                .ForMember(dto => dto.Categories
+                ,config=> config.MapFrom(
+                    entity=> entity.CategoryToProducts.Select(c=> c.Category)));
+
+            CreateMap<CategoryProductViewModel, Product>();
+
+            CreateMap<Category, CategoryProductViewModel>();
+            CreateMap<CategoryProductViewModel,Category>();
+
+
         }
     }
 }
