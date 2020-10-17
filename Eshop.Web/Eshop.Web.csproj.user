@@ -13,5 +13,6 @@
     <RazorPage_SelectedScaffolderID>ModelBasedCrudRazorPageScaffolder</RazorPage_SelectedScaffolderID>
     <RazorPage_SelectedScaffolderCategoryPath>root/RazorPage</RazorPage_SelectedScaffolderCategoryPath>
     <WebStackScaffolding_DbContextTypeFullName>Eshop.Data.Context.EshopContext</WebStackScaffolding_DbContextTypeFullName>
+    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

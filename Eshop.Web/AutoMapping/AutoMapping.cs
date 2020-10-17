@@ -23,7 +23,11 @@ namespace Eshop.Web.AutoMapping
 
             CreateMap<CategoryProductViewModel, Product>();
 
-            CreateMap<Category, CategoryProductViewModel>();
+            CreateMap<Category, CategoryProductViewModel>()
+                .ForMember(dto => dto.Categories
+                    , config => config.MapFrom(
+                        entity => entity.CategoryToProducts.Select(c => c.Category)));
+
             CreateMap<CategoryProductViewModel,Category>();
 
 

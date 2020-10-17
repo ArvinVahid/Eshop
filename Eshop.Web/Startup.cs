@@ -48,14 +48,6 @@ namespace Eshop.Web
 
             #endregion
 
-            #region IoC
-
-            services.AddTransient<IUserServices, UserServices>();
-            services.AddTransient<IProductServices, ProductServices>();
-            services.AddTransient<IItemServices, ItemServices>();
-            services.AddTransient<IOrderServices, OrderServices>();
-
-            #endregion
 
             #region Authentication
 
