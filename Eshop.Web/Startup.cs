@@ -8,6 +8,7 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
+using Eshop.Data.AutoFac;
 using Eshop.Data.Context;
 using Eshop.Data.UserServices;
 using Eshop.Web.AutoMapping;
@@ -69,7 +70,7 @@ namespace Eshop.Web
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new ServicesModule.ServicesModule());
+            builder.RegisterModule(new RegisterModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

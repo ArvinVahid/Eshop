@@ -1,0 +1,12 @@
+G:\Projects\Eshop\Eshop.Core\bin\Debug\netcoreapp3.1\Eshop.Core.deps.json
+G:\Projects\Eshop\Eshop.Core\bin\Debug\netcoreapp3.1\Eshop.Core.runtimeconfig.json
+G:\Projects\Eshop\Eshop.Core\bin\Debug\netcoreapp3.1\Eshop.Core.runtimeconfig.dev.json
+G:\Projects\Eshop\Eshop.Core\bin\Debug\netcoreapp3.1\Eshop.Core.dll
+G:\Projects\Eshop\Eshop.Core\bin\Debug\netcoreapp3.1\Eshop.Core.pdb
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.csprojAssemblyReference.cache
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.AssemblyInfoInputs.cache
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.AssemblyInfo.cs
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.csproj.CoreCompileInputs.cache
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.dll
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.pdb
+G:\Projects\Eshop\Eshop.Core\obj\Debug\netcoreapp3.1\Eshop.Core.genruntimeconfig.cache
