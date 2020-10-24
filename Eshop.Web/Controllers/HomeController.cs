@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;

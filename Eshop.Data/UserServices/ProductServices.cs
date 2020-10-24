@@ -24,7 +24,9 @@ namespace Eshop.Data.UserServices
 
         public Product GetAdminProductById(int id)
         {
-            return _context.Products.SingleOrDefault(p => p.Id == id);
+            return _context.Products.Include(i=>i.Item)
+                .SingleOrDefault(p => p.Id == id);
+                
         }
 
         public List<Category> GetAllCategories()
@@ -40,7 +42,9 @@ namespace Eshop.Data.UserServices
         public Product GetProductById(int id)
         {
             return _context.Products.Include(i => i.Item)
-                .SingleOrDefault(p => p.ItemId == id);
+                .Include(c => c.CategoryToProducts)
+                .ThenInclude(c=>c.Category)
+                .SingleOrDefault(p => p.Id == id);
         }
 
         public List<Product> GetProductsByGroupId(int id)

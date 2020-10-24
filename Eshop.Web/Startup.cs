@@ -11,7 +11,6 @@ using Eshop.Core.Services.Interfaces;
 using Eshop.Data.AutoFac;
 using Eshop.Data.Context;
 using Eshop.Data.UserServices;
-using Eshop.Web.AutoMapping;
 using Eshop.Web.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;

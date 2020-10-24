@@ -16,11 +16,9 @@ namespace Eshop.Web.DTOs
         public int ItemId { get; set; }
 
 
-        public List<CategoryToProduct> CategoryToProducts { get; set; }
         public Item Item { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
-        public Product Product { get; set; }
         public List<Category> Categories { get; set; }
+        public List<CategoryToProduct> CategoryToProducts { get; set; }
 
 
         #endregion

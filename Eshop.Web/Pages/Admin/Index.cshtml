@@ -9,16 +9,17 @@
     <a class="btn btn-success text-white" asp-page="Add">افزودن کالا</a>
 </p>
 
-<table class="table table-hover table-bordered">
-    <thead>
+<div class="m-2">
+    <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
         <tr>
             <th>تصویر</th>
             <th>نام</th>
             <th>قیمت</th>
             <th>دستورات</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (var item in Model.Products)
         {
             <tr>
@@ -37,5 +38,6 @@
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
