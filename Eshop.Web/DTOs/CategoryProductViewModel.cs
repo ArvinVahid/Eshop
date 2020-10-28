@@ -18,7 +18,6 @@ namespace Eshop.Web.DTOs
 
         public Item Item { get; set; }
         public List<Category> Categories { get; set; }
-        public List<CategoryToProduct> CategoryToProducts { get; set; }
 
 
         #endregion
