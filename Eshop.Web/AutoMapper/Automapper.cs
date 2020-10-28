@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Core.Entities;
+using Eshop.Data.Migrations;
 using Eshop.Web.DTOs;
 
 namespace Eshop.Web.AutoMapper
@@ -18,7 +19,8 @@ namespace Eshop.Web.AutoMapper
             CreateMap<Product, CategoryProductViewModel>()
                 .ForMember(dto => dto.Categories,
                     config => config.MapFrom(entity =>
-                        entity.CategoryToProducts.Select(c=>c.Category)));
+                        entity.CategoryToProducts.Select(c=>c.Category))
+                );
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Eshop.Web.DTOs
         public int ItemId { get; set; }
 
 
-        public Item Item { get; set; }
         public List<Category> Categories { get; set; }
+        public Item Item { get; set; }
 
 
         #endregion

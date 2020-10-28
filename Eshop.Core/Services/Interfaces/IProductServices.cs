@@ -14,6 +14,7 @@ namespace Eshop.Core.Services.Interfaces
         List<Product> GetProductsByGroupId(int id);
         List<Category> GetAllCategories();
         Product GetProductById(int id);
+        IQueryable<Product> GetProductByIdForDTO(int id);
         Product GetAdminProductById(int id);
 
     }

@@ -59,9 +59,10 @@ namespace Eshop.Web.Controllers
 
         public IActionResult Details(int itemId)
         {
-            var product = _productServices.GetProductById(itemId);
+            var product = _productServices.GetProductByIdForDTO(itemId);
 
-            var dto = _mapper.Map<CategoryProductViewModel>(product);
+            var dto = _mapper.ProjectTo<CategoryProductViewModel>(product)
+                .SingleOrDefault(p => p.ItemId == itemId);
 
             return View(dto);
         }

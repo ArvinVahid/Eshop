@@ -22,6 +22,14 @@ namespace Eshop.Data.UserServices
             _context.Add(product);
         }
 
+        public IQueryable<Product> GetProductByIdForDTO(int id)
+        {
+            return _context.Products.Include(i => i.Item)
+                .Include(c => c.CategoryToProducts)
+                .ThenInclude(c => c.Category);
+
+        }
+
         public Product GetAdminProductById(int id)
         {
             return _context.Products.Include(i=>i.Item)
@@ -42,9 +50,7 @@ namespace Eshop.Data.UserServices
         public Product GetProductById(int id)
         {
             return _context.Products.Include(i => i.Item)
-                .Include(c => c.CategoryToProducts)
-                .ThenInclude(c=>c.Category)
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefault(p=> p.ItemId == id);
         }
 
         public List<Product> GetProductsByGroupId(int id)
