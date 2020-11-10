@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Eshop.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Eshop.Web.Controllers
 {

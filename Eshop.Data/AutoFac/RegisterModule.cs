@@ -16,6 +16,7 @@ namespace Eshop.Data.AutoFac
             builder.RegisterAssemblyTypes(dataAccess)
                 .Where(t => t.Name.EndsWith("Services"))
                 .AsImplementedInterfaces();
+
         }
     }
 }

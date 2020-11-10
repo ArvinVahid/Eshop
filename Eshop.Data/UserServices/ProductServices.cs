@@ -24,10 +24,7 @@ namespace Eshop.Data.UserServices
 
         public IQueryable<Product> GetProductByIdForDTO(int id)
         {
-            return _context.Products.Include(i => i.Item)
-                .Include(c => c.CategoryToProducts)
-                .ThenInclude(c => c.Category);
-
+            return _context.Products;
         }
 
         public Product GetAdminProductById(int id)
