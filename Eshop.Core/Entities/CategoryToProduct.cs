@@ -13,6 +13,7 @@ namespace Eshop.Core.Entities
 
         public Category Category { get; set; }
         public Product Product { get; set; }
+        public Item Item { get; set; }
 
         #endregion
     }

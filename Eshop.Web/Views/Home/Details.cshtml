@@ -8,16 +8,13 @@
     <hr />
     <p class="text-center"><img src="/images/@(Model.ItemId).jpg" class="img-thumbnail" style="max-width: 800px; max-height: 800px" /></p>
     <blockquote class="py-2">@Model.Description</blockquote>
-    <p class="font-weight-bold">قیمت: @Model.Item.Price تومان</p>
+    <p class="font-weight-bold">قیمت: @Model.Price تومان</p>
     <dl>
-        @foreach (var item in Model.Categories)
-        {
-            <dt>@item.Name</dt>
-            <dd>@item.Description</dd>
-        }
+        <dt>@Model.CategoryName</dt>
+        <dd>@Model.CategoryDescription</dd>
     </dl>
-    <a class="btn btn-primary text-white" asp-action="AddToCart" asp-controller="Home" 
-       asp-route-itemId ="@Model.ItemId">افزودن به سبد خرید</a>
+    <a class="btn btn-primary text-white" asp-action="AddToCart" asp-controller="Home"
+       asp-route-itemId="@Model.ItemId">افزودن به سبد خرید</a>
 </div>
 
 

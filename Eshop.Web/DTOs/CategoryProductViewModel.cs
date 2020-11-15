@@ -13,11 +13,14 @@ namespace Eshop.Web.DTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CategoryName { get; set; }
+        public string CategoryDescription { get; set; }
         public int ItemId { get; set; }
+        public int Price { get; set; }
 
 
-        public List<Category> Categories { get; set; }
-        public Item Item { get; set; }
+        /*public List<Category> Categories { get; set; }*/
+        /*public Item Item { get; set; }*/
 
 
         #endregion

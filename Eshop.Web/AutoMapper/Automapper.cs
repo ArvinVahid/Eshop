@@ -17,10 +17,20 @@ namespace Eshop.Web.AutoMapper
             CreateMap<RegisterViewModel, User>();
 
             CreateMap<Product, CategoryProductViewModel>()
-                .ForMember(dto => dto.Categories,
+
+                .ForMember(dto => dto.CategoryName,
                     config => config.MapFrom(entity =>
-                        entity.CategoryToProducts.Select(c=>c.Category))
-                );
+                        entity.CategoryToProducts.Select(c => c.Category.Name)))
+
+                .ForMember(dto => dto.CategoryDescription,
+                    config => config.MapFrom(entity =>
+                        entity.CategoryToProducts.Select(c => c.Category.Description)))
+
+
+                .ForMember(dto => dto.Price,
+                    config => config.MapFrom(entity =>
+                        entity.Item.Price));
+
         }
     }
 }
