@@ -51,9 +51,9 @@ namespace Eshop.Web.Controllers
             }
 
 
-            /*var userDTO = _mapper.Map<User>(register);
+            var userDTO = _mapper.Map<User>(register);
             _userServices.AddUser(userDTO);
-            _userServices.SaveChanges();*/
+            _userServices.SaveChanges();
             return View("SuccessRegister", register);
         }
 
@@ -61,13 +61,14 @@ namespace Eshop.Web.Controllers
 
         #region Login
 
+        [Route("Login")]
         public IActionResult Login()
         {
             return View();
         }
 
+        [Route("Login")]
         [HttpPost]
-
         public IActionResult Login(LoginViewModel login)
         {
             if (!ModelState.IsValid)

@@ -12,6 +12,7 @@ using Eshop.Data.AutoFac;
 using Eshop.Data.Context;
 using Eshop.Data.UserServices;
 using Eshop.Web.DTOs;
+using Eshop.Web.ValueProvider;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,8 +38,15 @@ namespace Eshop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddAutoMapper(typeof(Startup));
+
             services.AddRazorPages();
+
+            services.AddMvc(options =>
+            {
+                options.ValueProviderFactories.Add(new FarsiQueryStringValueProviderFactory());
+            });
 
             #region Database Context
 
@@ -67,10 +75,6 @@ namespace Eshop.Web
 
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterModule(new RegisterModule());
-        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -103,11 +107,11 @@ namespace Eshop.Web
                 {
                     if (!context.User.Identity.IsAuthenticated)
                     {
-                        context.Response.Redirect("/Account/Login");
+                        context.Response.Redirect("/Login");
                     }
                     else if (!bool.Parse(context.User.FindFirstValue("IsAdmin")))
                     {
-                        context.Response.Redirect("/Account/Login");
+                        context.Response.Redirect("/Login");
                     }
                 }
                 await next.Invoke();

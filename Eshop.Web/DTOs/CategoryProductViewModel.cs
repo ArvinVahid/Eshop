@@ -14,6 +14,5 @@ namespace Eshop.Web.DTOs
         public int ItemId { get; set; }
         public int Price { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
-
     }
 }
