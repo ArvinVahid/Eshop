@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
@@ -29,7 +30,7 @@ namespace Eshop.Web.Pages.Admin
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
@@ -41,8 +42,8 @@ namespace Eshop.Web.Pages.Admin
                 QuantityInStock = Product.QuantityInStock
             };
 
-            _itemServices.AddItem(item);
-            _userServices.SaveChanges();
+            await _itemServices.AddItem(item, cancellationToken);
+            await _userServices.SaveChangeAsync(cancellationToken);
 
             var product = new Product()
             {
@@ -51,10 +52,10 @@ namespace Eshop.Web.Pages.Admin
                 Description = Product.Description
             };
 
-            _productServices.AddProduct(product);
-            _userServices.SaveChanges();
+            await _productServices.AddProduct(product, cancellationToken);
+            await _userServices.SaveChangeAsync(cancellationToken);
             product.ItemId = product.Id;
-            _userServices.SaveChanges();
+            await _userServices.SaveChangeAsync(cancellationToken);
 
             if (Product.Picture?.Length > 0)
             {

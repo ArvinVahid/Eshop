@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Eshop.Core.Entities
 {
-    public class CategoryToProduct
+    public class CategoryToProduct : IEntity
     {
         public int CategoryId { get; set; }
         public int ProductId { get; set; }

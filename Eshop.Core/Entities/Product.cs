@@ -4,18 +4,17 @@ using System.Text;
 
 namespace Eshop.Core.Entities
 {
-    public class Product
+    public class Product : BaseEntity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int ItemId { get; set; }
 
         #region Relations
 
-        public List<CategoryToProduct> CategoryToProducts { get; set; }
+        public ICollection<CategoryToProduct> CategoryToProducts { get; set; }
         public Item Item { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         #endregion
     }

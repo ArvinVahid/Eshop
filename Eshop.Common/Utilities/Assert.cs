@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 
-namespace Common.Utilities
+namespace Eshop.Common.Utilities
 {
     public static class Assert
     {

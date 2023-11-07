@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Core.Convertors;
@@ -36,7 +37,7 @@ namespace Eshop.Web.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public IActionResult Register(RegisterViewModel register)
+        public async Task<IActionResult> Register(RegisterViewModel register, CancellationToken cancellationToken)
         {
             ViewBag.Email = EmailCleaner.CleanedEmail(register.Email);
             if (!ModelState.IsValid)
@@ -44,7 +45,7 @@ namespace Eshop.Web.Controllers
                 return View(register);
             }
 
-            if (_userServices.IsExistByEmail(register.Email))
+            if (await _userServices.IsExistByEmail(register.Email, cancellationToken))
             {
                 ModelState.AddModelError("Email", "ایمیل وارد شده قبلا ثبت نام کرده است");
                 return View(register);
@@ -52,8 +53,8 @@ namespace Eshop.Web.Controllers
 
 
             var userDTO = _mapper.Map<User>(register);
-            _userServices.AddUser(userDTO);
-            _userServices.SaveChanges();
+            await _userServices.AddUser(userDTO, cancellationToken);
+            await _userServices.SaveChangeAsync(cancellationToken);
             return View("SuccessRegister", register);
         }
 
@@ -69,14 +70,14 @@ namespace Eshop.Web.Controllers
 
         [Route("Login")]
         [HttpPost]
-        public IActionResult Login(LoginViewModel login)
+        public async  Task<IActionResult> Login(LoginViewModel login, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return View(login);
             }
 
-            var user = _userServices.LoginUser(login.Email, login.Password);
+            var user = await _userServices.LoginUser(login.Email, login.Password, cancellationToken);
             if (user == null)
             {
                 ModelState.AddModelError("Email", "کاربری با مشخصات وارد شده یافت نشد");
@@ -85,7 +86,7 @@ namespace Eshop.Web.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Email),
                 new Claim("IsAdmin", user.IsAdmin.ToString()),
                 // new Claim("CodeMeli", user.Email),
@@ -100,7 +101,7 @@ namespace Eshop.Web.Controllers
                 IsPersistent = login.RememberMe
             };
 
-            HttpContext.SignInAsync(principal, properties);
+            await HttpContext.SignInAsync(principal, properties);
 
             return Redirect("/");
 

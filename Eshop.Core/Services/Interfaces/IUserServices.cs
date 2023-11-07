@@ -13,6 +13,7 @@ namespace Eshop.Core.Services.Interfaces
         Task<User> LoginUser(string email, string password, CancellationToken cancellationToken);
         Task<bool> IsExistByEmail(string email, CancellationToken cancellationToken);
         Task AddUser(User user, CancellationToken cancellationToken);
+        Task SaveChangeAsync(CancellationToken cancellationToken);
 
     }
 }

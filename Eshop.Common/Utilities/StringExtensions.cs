@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Utilities
+namespace Eshop.Common.Utilities
 {
     public static class StringExtensions
     {

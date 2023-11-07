@@ -4,15 +4,14 @@ using System.Text;
 
 namespace Eshop.Core.Entities
 {
-    public class Category
+    public class Category : BaseEntity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
         #region Relations
 
-        public List<CategoryToProduct> CategoryToProducts { get; set; }
+        public ICollection<CategoryToProduct> CategoryToProducts { get; set; }
 
         #endregion
     }

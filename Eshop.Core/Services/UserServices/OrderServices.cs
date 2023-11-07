@@ -2,55 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Eshop.Core.Contracts;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Eshop.Data.UserServices
+namespace Eshop.Core.Services.UserServices
 {
     public class OrderServices : IOrderServices
     {
-        private readonly IEshopContext _context;
-
-        public OrderServices(IEshopContext context)
+        private readonly IOrderRepository _orderRepository;
+        public OrderServices(IOrderRepository orderRepository)
         {
-            _context = context;
+            _orderRepository = orderRepository;
         }
-        public Order GetOrderById(int id)
+        
+        public async Task<Order> GetOrderById(int id, CancellationToken cancellationToken)
         {
-            return _context.Orders.SingleOrDefault(u => u.UserId == id && !u.IsFinaly);
-        }
-
-        public OrderDetail GetOrderDetail(Order order, Product product)
-        {
-            return _context.OrderDetails.SingleOrDefault(p => p.OrderId == order.Id && p.ProductId == product.Id);
+            return await _orderRepository.GetOrderById(id, cancellationToken);
         }
 
-        public void AddOrder(Order order)
+        public async Task AddOrder(Order order, CancellationToken cancellationToken)
         {
-            _context.Orders.Add(order);
+            await _orderRepository.AddOrder(order, cancellationToken);
         }
 
-        public void AddOrderDetail(OrderDetail orderDetail)
+        public async Task<Order> IsOrderFinally(int id, CancellationToken cancellationToken)
         {
-            _context.OrderDetails.Add(orderDetail);
-        }
-
-        public Order IsOrderFinally(int id)
-        {
-            return _context.Orders.Where(u => u.UserId == id && !u.IsFinaly).Include(p => p.OrderDetails)
-                .ThenInclude(p => p.Product).FirstOrDefault();
-        }
-
-        public OrderDetail GetDetailId(int id)
-        {
-            return _context.OrderDetails.Find(id);
-        }
-
-        public void RemoveOrderDetail(OrderDetail detail)
-        {
-            _context.OrderDetails.Remove(detail);
+            return await _orderRepository.IsOrderFinally(id, cancellationToken);
         }
     }
 }

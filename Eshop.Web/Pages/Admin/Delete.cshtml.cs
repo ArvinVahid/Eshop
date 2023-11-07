@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
@@ -26,18 +27,18 @@ namespace Eshop.Web.Pages.Admin
         [BindProperty]
         public Product Product { get; set; }
 
-        public void OnGet(int id)
+        public async Task OnGet(int id, CancellationToken cancellationToken)
         {
-            Product = _productServices.GetAdminProductById(id);
+            Product = await _productServices.GetAdminProductById(id, cancellationToken);
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
-            var products = _productServices.GetProductById(Product.Id);
-            var item = _itemServices.GetItemById(Product.Id);
+            var products = await _productServices.GetProductById(Product.Id, cancellationToken);
+            var item = await _itemServices.GetItemById(Product.Id, cancellationToken);
 
-            _productServices.RemoveProduct(products);
-            _itemServices.RemoveItem(item);
-            _userServices.SaveChanges();
+            await _productServices.RemoveProduct(products, cancellationToken);
+            await _itemServices.RemoveItem(item, cancellationToken);
+            await _userServices.SaveChangeAsync(cancellationToken);
 
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", Product.Id + ".jpg");
 

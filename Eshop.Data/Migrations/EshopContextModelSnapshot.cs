@@ -71,7 +71,12 @@ namespace Eshop.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
                     b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ItemId");
 
                     b.HasIndex("ProductId");
 
@@ -180,7 +185,7 @@ namespace Eshop.Data.Migrations
 
             modelBuilder.Entity("Eshop.Core.Entities.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -194,7 +199,7 @@ namespace Eshop.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -203,7 +208,7 @@ namespace Eshop.Data.Migrations
 
             modelBuilder.Entity("Eshop.Core.Entities.OrderDetail", b =>
                 {
-                    b.Property<int>("DetailId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -220,7 +225,7 @@ namespace Eshop.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("DetailId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
@@ -278,15 +283,15 @@ namespace Eshop.Data.Migrations
 
             modelBuilder.Entity("Eshop.Core.Entities.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
@@ -299,7 +304,7 @@ namespace Eshop.Data.Migrations
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
@@ -311,6 +316,10 @@ namespace Eshop.Data.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Eshop.Core.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId");
 
                     b.HasOne("Eshop.Core.Entities.Product", "Product")
                         .WithMany("CategoryToProducts")

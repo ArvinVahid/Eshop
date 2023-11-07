@@ -1,0 +1,13 @@
+C:\Projects\Eshop_Clone\Eshop.Common\bin\Debug\netcoreapp3.1\Eshop.Common.deps.json
+C:\Projects\Eshop_Clone\Eshop.Common\bin\Debug\netcoreapp3.1\Eshop.Common.runtimeconfig.json
+C:\Projects\Eshop_Clone\Eshop.Common\bin\Debug\netcoreapp3.1\Eshop.Common.runtimeconfig.dev.json
+C:\Projects\Eshop_Clone\Eshop.Common\bin\Debug\netcoreapp3.1\Eshop.Common.dll
+C:\Projects\Eshop_Clone\Eshop.Common\bin\Debug\netcoreapp3.1\Eshop.Common.pdb
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.csproj.AssemblyReference.cache
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.AssemblyInfoInputs.cache
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.AssemblyInfo.cs
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.csproj.CoreCompileInputs.cache
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.dll
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.pdb
+C:\Projects\Eshop_Clone\Eshop.Common\obj\Debug\netcoreapp3.1\Eshop.Common.genruntimeconfig.cache

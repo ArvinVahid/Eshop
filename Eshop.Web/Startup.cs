@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using ElmahCore.Mvc;
+using ElmahCore.Sql;
+using Eshop.Core.Contracts;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
+using Eshop.Core.Services.UserServices;
 using Eshop.Data.AutoFac;
 using Eshop.Data.Context;
+using Eshop.Data.Repositories;
 using Eshop.Data.UserServices;
 using Eshop.Web.DTOs;
 using Eshop.Web.ValueProvider;
@@ -17,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +43,8 @@ namespace Eshop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Configs
+
             services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(Startup));
@@ -47,6 +55,18 @@ namespace Eshop.Web
             {
                 options.ValueProviderFactories.Add(new FarsiQueryStringValueProviderFactory());
             });
+
+            #endregion
+
+            #region Elmah
+
+            services.AddElmah<SqlErrorLog>(options =>
+            {
+                options.OnPermissionCheck = context => context.User.Identity.IsAuthenticated;
+                options.ConnectionString = Configuration.GetConnectionString(nameof(EshopContext));
+            });
+
+            #endregion
 
             #region Database Context
 
@@ -73,13 +93,36 @@ namespace Eshop.Web
 
             #endregion
 
+            #region Ioc
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserServices, UserServices>();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductServices, ProductServices>();
+
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IItemServices, ItemServices>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderServices, OrderServices>();
+
+            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<IOrderDetailServices, OrderDetailService>();
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryServices, CategoryServices>();
+
+            services.AddScoped<ICategoryToProductRepository, CategoryToProductRepository>();
+            services.AddScoped<ICategoryToProductServices, CategoryToProductServices>();
+
+            #endregion
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new RegisterModule());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -89,12 +132,11 @@ namespace Eshop.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -102,6 +144,8 @@ namespace Eshop.Web
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseElmah();
 
             app.Use(async (context, next) =>
             {

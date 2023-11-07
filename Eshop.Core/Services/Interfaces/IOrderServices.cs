@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Eshop.Core.Entities;
 
 namespace Eshop.Core.Services.Interfaces
 {
     public interface IOrderServices
     {
-        Order GetOrderById(int id);
-        OrderDetail GetOrderDetail(Order order, Product product);
-        void AddOrder(Order order);
-        void AddOrderDetail(OrderDetail orderDetail);
-        Order IsOrderFinally(int id);
-        OrderDetail GetDetailId(int id);
-        void RemoveOrderDetail(OrderDetail detail);
+        Task<Order> GetOrderById(int id, CancellationToken cancellationToken);
+        Task AddOrder(Order order, CancellationToken cancellationToken);
+        Task<Order> IsOrderFinally(int id, CancellationToken cancellationToken);
+
     }
 }

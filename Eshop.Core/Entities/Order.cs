@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Eshop.Core.Entities
 {
-    public class Order
+    public class Order : BaseEntity<int>
     {
-        [Key]
-        public int OrderId { get; set; }
         [Required]
         public int UserId { get; set; }
         [Required]
@@ -20,6 +18,6 @@ namespace Eshop.Core.Entities
 
         [ForeignKey("UserId")]
         public User Users { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

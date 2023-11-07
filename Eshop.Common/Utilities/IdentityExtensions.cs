@@ -1,10 +1,9 @@
-﻿using Common.Utilities;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Common
+namespace Eshop.Common.Utilities
 {
     public static class IdentityExtensions
     {

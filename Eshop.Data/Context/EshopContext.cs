@@ -1,19 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Eshop.Common.Utilities;
 using Eshop.Core.Entities;
 
 namespace Eshop.Data.Context
 {
-    public class EshopContext : DbContext
+    public class EshopContext : DbContext, IEshopContext
     {
         public EshopContext(DbContextOptions<EshopContext> options) : base(options)
         {
 
         }
-
-        #region Database Tables
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -23,13 +26,19 @@ namespace Eshop.Data.Context
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        #endregion
-
-        #region SeedData
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            /*var entitiesAssembly = typeof(IEntity).Assembly;
+
+            modelBuilder.RegisterAllEntities<IEntity>(entitiesAssembly);
+            modelBuilder.RegisterEntityTypeConfiguration(entitiesAssembly);
+            modelBuilder.AddSequentialGuidForIdConvention();
+            modelBuilder.AddPluralizingTableNameConvention();*/
             modelBuilder.Entity<CategoryToProduct>().HasKey(k => new { k.CategoryId, k.ProductId });
+
+            #region Seed Data
 
             modelBuilder.Entity<Category>().HasData(
 
@@ -86,7 +95,8 @@ namespace Eshop.Data.Context
                     Id = 3,
                     ItemId = 3,
                     Name = "آموزش اپلیکیشن های وب پیش رونده ( PWA )",
-                    Description = "آموزش اپلیکیشن های وب پیش رونده ( PWA ) آموزش PWA از مقدماتی تا پیشرفته وب اپلیکیشن‌های پیش رونده(PWA) نسل جدید اپلیکیشن‌های تحت وب هستند که می‌توانند آینده‌ی اپلیکیشن‌های موبایل را متحول کنند.در این دوره به طور جامع به بررسی آن‌ها خواهیم پرداخت. مزایا و فاکتور هایی که یک وب اپلیکیشن دارا می باشد به صورت زیر می باشد : ریسپانسیو :  رکن اصلی سایت برای PWA ریسپانسیو بودن اپلیکیشن هستش که برای صفحه نمایش کاربران مختلف موبایل و تبلت خود را وفق دهند."
+                    Description =
+                        "آموزش اپلیکیشن های وب پیش رونده ( PWA ) آموزش PWA از مقدماتی تا پیشرفته وب اپلیکیشن‌های پیش رونده(PWA) نسل جدید اپلیکیشن‌های تحت وب هستند که می‌توانند آینده‌ی اپلیکیشن‌های موبایل را متحول کنند.در این دوره به طور جامع به بررسی آن‌ها خواهیم پرداخت. مزایا و فاکتور هایی که یک وب اپلیکیشن دارا می باشد به صورت زیر می باشد : ریسپانسیو :  رکن اصلی سایت برای PWA ریسپانسیو بودن اپلیکیشن هستش که برای صفحه نمایش کاربران مختلف موبایل و تبلت خود را وفق دهند."
                 });
 
             modelBuilder.Entity<Item>().HasData(
@@ -129,7 +139,61 @@ namespace Eshop.Data.Context
                 new CategoryToProduct() { CategoryId = 3, ProductId = 3 },
                 new CategoryToProduct() { CategoryId = 4, ProductId = 3 });
 
-            base.OnModelCreating(modelBuilder);
+            #endregion
+        }
+
+        #region Overrides
+
+        public override int SaveChanges()
+        {
+            _cleanString();
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            _cleanString();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            _cleanString();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            _cleanString();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void _cleanString()
+        {
+            var changedEntities = ChangeTracker.Entries()
+                .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
+            foreach (var item in changedEntities)
+            {
+                if (item.Entity == null)
+                    continue;
+
+                var properties = item.Entity.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(p => p.CanRead && p.CanWrite && p.PropertyType == typeof(string));
+
+                foreach (var property in properties)
+                {
+                    var propName = property.Name;
+                    var val = (string)property.GetValue(item.Entity, null);
+
+                    if (val.HasValue())
+                    {
+                        var newVal = val.Fa2En().FixPersianChars();
+                        if (newVal == val)
+                            continue;
+                        property.SetValue(item.Entity, newVal, null);
+                    }
+                }
+            }
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;
@@ -11,19 +12,17 @@ namespace Eshop.Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductServices _productServices;
-
-        public ProductController(IProductServices productServices)
+        private readonly ICategoryToProductServices _toProductServices;
+        public ProductController(ICategoryToProductServices toProductServices)
         {
-            _productServices = productServices;
+            _toProductServices = toProductServices;
         }
-
-
+        
         [Route("/Groups/{id}/{name}")]
-        public IActionResult GetProductByGroupId(int id, string name)
+        public async Task<IActionResult> GetProductByGroupId(int id, string name, CancellationToken cancellationToken)
         {
             ViewData["GroupName"] = name;
-            var products = _productServices.GetProductsByGroupId(id);
+            var products = await _toProductServices.GetProductsByGroupId(id, cancellationToken);
             return View(products);
         }
         

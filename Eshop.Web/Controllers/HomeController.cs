@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -25,31 +26,29 @@ namespace Eshop.Web.Controllers
         private readonly IUserServices _userServices;
         private readonly IProductServices _productServices;
         private readonly IOrderServices _orderServices;
+        private readonly IOrderDetailServices _orderDetailServices;
+        private readonly ICategoryToProductServices _categoryToProductServices;
         private readonly IMapper _mapper;
-
-        public HomeController(IUserServices userServices, IProductServices productServices, IOrderServices orderServices, IMapper mapper)
+        public HomeController(IUserServices userServices, IProductServices productServices, IOrderServices orderServices, IOrderDetailServices orderDetailServices, ICategoryToProductServices categoryToProductServices, IMapper mapper)
         {
             _userServices = userServices;
             _productServices = productServices;
             _orderServices = orderServices;
+            _orderDetailServices = orderDetailServices;
+            _categoryToProductServices = categoryToProductServices;
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
             var products = _productServices.GetAllProducts();
             return View(products);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         public IActionResult ContactUs()
@@ -59,12 +58,10 @@ namespace Eshop.Web.Controllers
 
         #region Product Detail
 
-        public IActionResult Details(int itemId)
+        public async Task<IActionResult> Details(int itemId, CancellationToken cancellationToken)
         {
-            var product = _productServices.GetProductByIdForDTO(itemId);
-
-            var dto = _mapper.ProjectTo<CategoryProductViewModel>(product)
-                .SingleOrDefault(p => p.ItemId == itemId);
+            var product = await _productServices.GetProductByIdIncludeItem(itemId, cancellationToken);
+            var dto = _mapper.Map<CategoryProductViewModel> (product);
 
             return View(dto);
         }
@@ -74,29 +71,29 @@ namespace Eshop.Web.Controllers
         #region Cart
 
         [Authorize]
-        public IActionResult AddToCart(int itemId)
+        public async Task<IActionResult> AddToCart(int itemId, CancellationToken cancellationToken)
         {
-            var product = _productServices.GetProductById(itemId);
+            var product = await _productServices.GetProductByIdIncludeItem(itemId, cancellationToken);
             if (product != null)
             {
                 int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
-                var order = _orderServices.GetOrderById(userId);
+                var order = await _orderServices.GetOrderById(userId, cancellationToken);
                 if (order != null)
                 {
-                    var orderDetail = _orderServices.GetOrderDetail(order, product);
+                    var orderDetail = await _orderDetailServices.GetOrderDetail(order, product, cancellationToken);
                     if (orderDetail != null)
                     {
                         orderDetail.Count += 1;
                     }
                     else
                     {
-                        _orderServices.AddOrderDetail(new OrderDetail()
+                        await _orderDetailServices.AddOrderDetail(new OrderDetail()
                         {
-                            OrderId = order.OrderId,
+                            OrderId = order.Id,
                             ProductId = product.Id,
                             Price = product.Item.Price,
                             Count = 1
-                        });
+                        }, cancellationToken);
 
                     }
                 }
@@ -108,37 +105,37 @@ namespace Eshop.Web.Controllers
                         CreateDate = DateTime.Now,
                         UserId = userId
                     };
-                    _orderServices.AddOrder(order);
-                    _userServices.SaveChanges();
-                    _orderServices.AddOrderDetail(new OrderDetail()
+                    await _orderServices.AddOrder(order, cancellationToken);
+                    await _userServices.SaveChangeAsync(cancellationToken);
+                    await _orderDetailServices.AddOrderDetail(new OrderDetail()
                     {
-                        OrderId = order.OrderId,
+                        OrderId = order.Id,
                         ProductId = product.Id,
                         Price = product.Item.Price,
                         Count = 1
-                    });
+                    }, cancellationToken);
                 }
 
-                _userServices.SaveChanges();
+                await _userServices.SaveChangeAsync(cancellationToken);
             }
             return RedirectToAction("ShowCart");
         }
 
         [Authorize]
-        public IActionResult ShowCart()
+        public async Task<IActionResult> ShowCart(CancellationToken cancellationToken)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
-            var order = _orderServices.IsOrderFinally(userId);
+            var order = await _orderServices.IsOrderFinally(userId, cancellationToken);
             return View(order);
         }
 
         [Authorize]
-        public IActionResult RemoveCart(int detailId)
+        public async Task<IActionResult> RemoveCart(int detailId, CancellationToken cancellationToken)
         {
 
-            var orderDetail = _orderServices.GetDetailId(detailId);
-            _orderServices.RemoveOrderDetail(orderDetail);
-            _userServices.SaveChanges();
+            var orderDetail = await _orderDetailServices.GetDetailId(detailId, cancellationToken);
+            await _orderDetailServices.RemoveOrderDetail(orderDetail, cancellationToken);
+            await _userServices.SaveChangeAsync(cancellationToken);
             return RedirectToAction("ShowCart");
         }
 

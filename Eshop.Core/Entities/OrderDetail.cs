@@ -8,9 +8,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Eshop.Core.Entities
 {
-    public class OrderDetail
-    {[Key]
-        public int DetailId { get; set; }
+    public class OrderDetail : BaseEntity<int>
+    {
 
         [Required]
         public int OrderId { get; set; }

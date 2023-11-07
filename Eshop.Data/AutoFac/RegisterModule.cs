@@ -14,7 +14,7 @@ namespace Eshop.Data.AutoFac
             var dataAccess = Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(dataAccess)
-                .Where(t => t.Name.EndsWith("Services"))
+                .Where(t => t.Name.EndsWith("Services") || t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
 
         }

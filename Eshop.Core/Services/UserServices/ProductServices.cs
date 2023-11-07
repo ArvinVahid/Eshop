@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Eshop.Core.Contracts;
 using Eshop.Core.Entities;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;
@@ -11,56 +14,44 @@ namespace Eshop.Data.UserServices
 {
     public class ProductServices : IProductServices
     {
-        private readonly IEshopContext _context;
-
-        public ProductServices(IEshopContext context)
+        private readonly IProductRepository _productRepository;
+        public ProductServices(IProductRepository productRepository)
         {
-            _context = context;
+            _productRepository = productRepository;
         }
-        public void AddProduct(Product product)
+        
+        public async Task AddProduct(Product product, CancellationToken cancellationToken)
         {
-            _context.Products.Add(product);
-        }
-
-        public IQueryable<Product> GetProductByIdForDTO(int id)
-        {
-            return _context.Products;
+            await _productRepository.AddProduct(product, cancellationToken);
         }
 
-        public Product GetAdminProductById(int id)
+        public async Task<Product> GetProductByIdIncludeCategoryProducts(int id, CancellationToken cancellationToken)
         {
-            return _context.Products.Include(i=>i.Item)
-                .SingleOrDefault(p => p.Id == id);
-                
+            return await _productRepository.GetProductByIdIncludeCategoryProducts(id, cancellationToken);
         }
 
-        public List<Category> GetAllCategories()
+        public async Task<Product> GetProductById(int id, CancellationToken cancellationToken)
         {
-            return _context.Categories.ToList();
+            return await _productRepository.GetProductById(id, cancellationToken);
         }
 
+        public async Task<Product> GetAdminProductById(int id, CancellationToken cancellationToken)
+        {
+            return await _productRepository.GetAdminProductById(id, cancellationToken);
+
+        }
+        public async Task<Product> GetProductByIdIncludeItem(int id, CancellationToken cancellationToken)
+        {
+            return await _productRepository.GetProductByIdIncludeItem(id, cancellationToken);
+        }
         public IQueryable<Product> GetAllProducts()
         {
-            return _context.Products.Include(p => p.Item);
+            return _productRepository.GetAllProducts();
         }
 
-        public Product GetProductById(int id)
+        public async Task RemoveProduct(Product product, CancellationToken cancellationToken)
         {
-            return _context.Products.Include(i => i.Item)
-                .SingleOrDefault(p=> p.ItemId == id);
-        }
-
-        public List<Product> GetProductsByGroupId(int id)
-        {
-            return _context.CategoryToProducts
-                .Where(c => c.CategoryId == id)
-                .Include(p => p.Product)
-                .Select(p => p.Product).ToList();
-        }
-
-        public void RemoveProduct(Product product)
-        {
-            _context.Products.Remove(product);
+            await _productRepository.RemoveProduct(product, cancellationToken);
         }
     }
 }

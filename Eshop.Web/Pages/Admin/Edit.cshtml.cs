@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Context;
@@ -27,9 +28,9 @@ namespace Eshop.Web.Pages.Admin
 
         [BindProperty]
         public AdminAddEditViewModel Product { get; set; }
-        public void OnGet(int id)
+        public async Task OnGet(int id,CancellationToken cancellationToken)
         {
-            Product = _productServices.GetAllProducts()
+            Product = await _productServices.GetAllProducts()
                 .Where(p => p.Id == id)
                 .Select(s => new AdminAddEditViewModel()
                 {
@@ -38,25 +39,25 @@ namespace Eshop.Web.Pages.Admin
                     Description = s.Description,
                     QuantityInStock = s.Item.QuantityInStock,
                     Price = s.Item.Price
-                }).FirstOrDefault();
+                }).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var products = _productServices.GetProductById(Product.Id);
-            var item = _itemServices.GetItemById(Product.Id);
+            var products = await _productServices.GetProductById(Product.Id, cancellationToken);
+            var item = await _itemServices.GetItemById(Product.Id, cancellationToken);
 
             products.Name = Product.Name;
             products.Description = Product.Description;
 
             item.Price = Product.Price;
             item.QuantityInStock = Product.QuantityInStock;
-            _userServices.SaveChanges();
+            await _userServices.SaveChangeAsync(cancellationToken);
 
             if (Product.Picture?.Length > 0)
             {

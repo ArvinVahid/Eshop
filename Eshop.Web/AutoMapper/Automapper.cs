@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Eshop.Core.Entities;
-using Eshop.Data.Migrations;
 using Eshop.Web.DTOs;
 
 namespace Eshop.Web.AutoMapper

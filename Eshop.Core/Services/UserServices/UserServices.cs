@@ -30,11 +30,15 @@ namespace Eshop.Data.UserServices
         {
             return await _userRepository.IsUserExistsByEmail(email, cancellationToken);
         }
-
-
+        
         public async Task AddUser(User user, CancellationToken cancellationToken)
         {
             await _userRepository.Entities.AddAsync(user, cancellationToken);
+        }
+
+        public async Task SaveChangeAsync(CancellationToken cancellationToken)
+        {
+            await _userRepository.SaveChangeAsync(cancellationToken);
         }
     }
 }
